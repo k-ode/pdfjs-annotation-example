@@ -8,7 +8,13 @@ document.addEventListener('pagerendered', function (ev) {
         var canvas = document.createElement('canvas');
         var pageCanvas = document.getElementById('page' + pageNumber);
 
-        var customAnnotationsDiv = document.createElement('div');
+        // If only CSS transform, old customAnnotationsDiv might stay.
+        var customAnnotationsDiv = pageContainer.querySelector('.customAnnotationsLayer');
+        if (customAnnotationsDiv) {
+            customAnnotationsDiv.parentNode.removeChild(customAnnotationsDiv);
+        }
+        
+        customAnnotationsDiv = document.createElement('div');
         customAnnotationsDiv.style.width = pageContainer.style.width;
         customAnnotationsDiv.style.height = pageContainer.style.height;
         customAnnotationsDiv.style.pointerEvents = 'none';
@@ -16,10 +22,10 @@ document.addEventListener('pagerendered', function (ev) {
         pageContainer.appendChild(customAnnotationsDiv);
         
         customAnnotationsDiv.appendChild(canvas);
-        canvas.style.width = pageCanvas.style.width;
-        canvas.style.height = pageCanvas.style.height;
-        canvas.width = pageCanvas.width;
-        canvas.height = pageCanvas.height;
+        canvas.style.width = pageContainer.style.width;
+        canvas.style.height = pageContainer.style.height;
+        canvas.width = page.width;
+        canvas.height = page.height;
 
         var ctx = canvas.getContext("2d");
 

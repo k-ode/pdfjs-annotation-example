@@ -3765,6 +3765,13 @@ var PDFPageView = (function PDFPageViewClosure() {
       if (redrawAnnotations && this.annotationLayer) {
         this.annotationLayer.setupAnnotations(this.viewport);
       }
+
+      var event = document.createEvent('CustomEvent');
+      event.initCustomEvent('pagerendered', true, true, {
+        pageNumber: this.id,
+        cssTransform: true
+      });
+      div.dispatchEvent(event);
     },
 
     get width() {
